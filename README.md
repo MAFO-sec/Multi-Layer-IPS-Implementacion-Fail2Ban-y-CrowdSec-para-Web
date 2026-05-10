@@ -1,76 +1,9 @@
-Multi-Layer IPS: Implementing Fail2Ban and CrowdSec for Web Security
-
-Este repositorio documenta el diseño y despliegue de un laboratorio de Ciberseguridad Defensiva, centrado en un Sistema de Prevención de Intrusiones (IPS) multicapa y monitorización avanzada a través de un SOC (Security Operations Center).
-
-El laboratorio cubre el ciclo completo de respuesta ante incidentes: detección de ataques de fuerza bruta, visualización de métricas en tiempo real y mitigación automatizada.
-🚀 Resumen del Proyecto
-
-La infraestructura simula un entorno real donde una aplicación web es protegida por dos capas de defensa activa que reaccionan ante comportamientos maliciosos detectados en los logs del servidor.
-🛡️ Capas de Defensa (IPS)
-
-    Fail2Ban (Capa Local): Monitoriza logs en busca de patrones específicos mediante expresiones regulares (Regex) y bloquea IPs en el firewall local tras superar un umbral de reintentos.
-
-    CrowdSec (Capa Inteligente): Utiliza un motor de análisis de comportamiento y una base de datos comunitaria para bloquear amenazas conocidas antes de que comprometan el sistema.
-
-📊 Monitorización (SOC)
-
-    Apache Superset: Dashboard interactivo que visualiza el tráfico malicioso.
-
-    Python ETL: Un pipeline personalizado que procesa los logs de acceso en formato CLF y alimenta una base de datos PostgreSQL.
-
-🛠️ Tecnologías Utilizadas
-
-    Contenedores: Docker & Docker Compose.
-
-    Servidor Web: Nginx (Proxy Inverso) & Flask (Backend Python).
-
-    Seguridad: Fail2Ban & CrowdSec (LAPI + Firewall Bouncer).
-
-    Análisis de Datos: Apache Superset & PostgreSQL.
-
-    Lenguajes: Python y Bash.
-
-📂 Estructura del Repositorio
-
-    /app: Código fuente de la aplicación Flask, plantillas HTML y Dockerfile.
-
-    /proxy: Configuración de Nginx para la transparencia de IPs (X-Forwarded-For).
-
-    /fail2ban: Filtros (filter.d) y cárceles (jail.d) personalizadas para el login.
-
-    /crowdsec: Configuración de adquisición de logs (acquis.yaml) y whitelists.
-
-    /scripts: Script Python para el procesamiento de logs hacia Superset.
-
-    /docs: Documentación técnica detallada (PDF).
-
-🧪 Pruebas de Concepto (PoC)
-
-Para validar la eficacia del sistema, se realizaron las siguientes pruebas:
-
-    Ataque de Fuerza Bruta: Uso de Hydra contra el puerto 8081 para simular un intento de intrusión.
-
-    Detección: Los logs registran errores 401 en formato estándar, detectados por Fail2Ban y CrowdSec.
-
-    Bloqueo: Verificación del baneo inmediato mediante comandos cscli y fail2ban-client.
-
-    Visualización: Observación en tiempo real del pico de ataques en el Dashboard de Superset.
-
-🔧 Instalación Rápida
-
-    Levantar infraestructura:
-    Bash
-
-    docker-compose up -d
-
-    Configurar CrowdSec:
-    Añadir el bouncer de firewall y ajustar la whitelist en /etc/crowdsec/parsers/s02-enrich/whitelists.yaml para permitir pruebas en red local.
-
-    Ejecutar Monitorización:
-    Bash
-
-    python3 scripts/procesar_logs.py
-
-👤 Autor
-
-    MAFO-sec
+🛡️ Multi-Layer IPS: Defensive Security LabImplementación de Fail2Ban y CrowdSec para Seguridad WebEste repositorio contiene el diseño y despliegue de un laboratorio de Ciberseguridad Defensiva, enfocado en un Sistema de Prevención de Intrusiones (IPS) multicapa y monitorización avanzada mediante un SOC (Security Operations Center).El laboratorio cubre el ciclo completo de respuesta ante incidentes: detección de ataques de fuerza bruta, visualización de métricas en tiempo real y mitigación automatizada.🚀 Resumen del ProyectoLa arquitectura simula un entorno de producción donde una aplicación web es protegida por dos capas de defensa activa que reaccionan ante comportamientos maliciosos detectados en los logs.Componentes del IPSFail2Ban (Capa de Reglas Locales): Analiza los logs mediante expresiones regulares (Regex) y bloquea IPs en el firewall local tras superar umbrales de reintentos.CrowdSec (Capa de Inteligencia Colectiva): Utiliza un motor de análisis de comportamiento y una base de datos global para bloquear amenazas conocidas antes de que toquen el servidor.Monitorización SOCApache Superset: Dashboard interactivo para la visualización de ataques.Python ETL: Pipeline personalizado que procesa logs en formato CLF y alimenta una base de datos PostgreSQL.🛠️ Tecnologías y HerramientasCategoríaHerramientasInfraestructuraDocker, Docker Compose, Nginx (Proxy Inverso)SeguridadFail2Ban, CrowdSec (LAPI + Firewall Bouncer)BackendPython (Flask), PostgreSQLAnálisisApache Superset, Python ETLAtaqueKali Linux, Hydra📂 Estructura del ProyectoBash├── app/            # Aplicación Flask, templates HTML y Dockerfile
+├── proxy/          # Configuración de Nginx (X-Forwarded-For)
+├── fail2ban/       # Filtros (filter.d) y cárceles (jail.d)
+├── crowdsec/       # Configuración de adquisición y whitelists
+├── scripts/        # Pipeline ETL para procesamiento de logs
+└── docs/           # Guía técnica detallada y documentación PDF
+🧪 Validación: Prueba de Concepto (PoC)Para demostrar la robustez del sistema, se ejecutó el siguiente flujo de trabajo:Simulación de Ataque: Uso de Hydra contra el endpoint /login para generar tráfico de fuerza bruta.Detección Inmediata: Generación de logs 401 que activan simultáneamente las reglas de Fail2Ban y los escenarios de CrowdSec.Bloqueo Efectivo:fail2ban-client status flask-login → IP Baneada.cscli decisions list → Decisión de baneo activa.Visualización: El pico de tráfico malicioso se refleja instantáneamente en el dashboard de Superset.🔧 Instalación y DespliegueLevantar el entorno:Bashdocker-compose up -d
+Configurar CrowdSec:Ajustar la whitelist para permitir pruebas en LAN y vincular el Bouncer de firewall.Iniciar Monitorización:Bashpython3 scripts/procesar_logs.py
+👤 AutorMAFO-sec 
