@@ -56,3 +56,7 @@ docker-compose up -d
 
 # 2. Iniciar monitorización
 python3 scripts/procesar_logs.py
+
+## 📑 Documentación Detallada
+Puedes consultar la guía técnica completa en formato PDF aquí: 
+[👉 Descargar Guía del Proyecto (PDF)](docs/Guia_Tecnica_IPS.pdf)
