@@ -1,0 +1,9 @@
+filenames:
+  - /home/marcos/fail2ban-web/logs/*.log
+labels:
+  type: nginx
+---
+filenames:
+  - /var/log/auth.log
+labels:
+  type: syslog
