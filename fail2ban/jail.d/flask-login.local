@@ -1,0 +1,9 @@
+[flask-login]
+enabled = true
+filter = flask-login
+logpath = /logs/*.log
+maxretry = 3
+findtime = 60
+bantime = 600
+port = 80,8081
+banaction = iptables-multiport
